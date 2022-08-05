@@ -92,15 +92,13 @@ public class StudentList {
 	}
 
 	private static void extracted() throws IOException {
-		FileWriter fileWriter = new FileWriter(Constant.textFile, false);
-		PrintWriter printWriter = new PrintWriter(fileWriter, false);
+		PrintWriter printWriter = new PrintWriter(new FileWriter(Constant.textFile, false), false);
 		printWriter.flush();
 		printWriter.close();
 	}
 	private static BufferedReader getBufferedReader() throws FileNotFoundException {
-		BufferedReader bufferedReader = new BufferedReader(
+		return new BufferedReader(
 				new InputStreamReader(
 						new FileInputStream(Constant.textFile)));
-		return bufferedReader;
 	}
 }
