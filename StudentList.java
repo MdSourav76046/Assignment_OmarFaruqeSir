@@ -4,8 +4,7 @@ import java.util.*;
 public class StudentList {
 	public static void main(String[] args) {
 //		Check arguments
-		String checker = args[0].substring(0);
-		char checkerChar = checker.charAt(0);
+		char checkerChar = args[0].substring(0).charAt(0);
 		if(args[0].length() >1 && (checkerChar == 'a' || checkerChar == 'r' || checkerChar == 'c')){
 			System.out.println(Constant.validText2);
 			return;
@@ -17,9 +16,7 @@ public class StudentList {
 		if(args[0].equals("a")) {
 			System.out.println(Constant.loadingText);
 			try {
-				BufferedReader bufferedReader = getBufferedReader();
-				String line = bufferedReader.readLine();
-				String Students[] = line.split(", ");
+				String Students[] = getBufferedReader().readLine().split(", ");
 				for(String student : Students) {
 					System.out.println(student);
 				}
@@ -32,12 +29,8 @@ public class StudentList {
 		else if(args[0].equals("r")) {
 			System.out.println(Constant.loadingText);
 			try {
-				BufferedReader bufferedReader = getBufferedReader();
-				String line = bufferedReader.readLine();
-				String Students[] = line.split(", ");
-				Random random = new Random();
-				int numOfWords = Students.length;
-				int index = random.nextInt(numOfWords);
+				String Students[] = getBufferedReader().readLine().split(", ");
+				int index = new Random().nextInt(Students.length);
 				System.out.println(Students[index]);
 			}
 			catch (Exception e){
@@ -50,17 +43,13 @@ public class StudentList {
 			try {
 				BufferedWriter bufferedWriter = new BufferedWriter(
 						new FileWriter(Constant.textFile, true));
-				BufferedReader bufferedReader = getBufferedReader();
-				String line = bufferedReader.readLine();
+				String line = getBufferedReader().readLine();
 				extracted();
 				String newLine = line;
 				String given = args[0].substring(1);
 				newLine+=", ";
 				newLine+=given;
-				Date date = new Date();
-				String dateStyle = "dd/mm/yyyy-hh:mm:ss a";
-				DateFormat dateFormat = new SimpleDateFormat(dateStyle);
-				String formatedDate= dateFormat.format(date);
+				String formatedDate= new SimpleDateFormat("dd/mm/yyyy-hh:mm:ss a").format(new Date());
 				bufferedWriter.write(newLine + "\nList newLine updated on " +formatedDate);
 				bufferedWriter.close();
 			}
@@ -72,19 +61,16 @@ public class StudentList {
 		else if(args[0].contains("?")) {
 			System.out.println(Constant.loadingText);
 			try {
-				BufferedReader bufferedReader = getBufferedReader();
-				String line = bufferedReader.readLine();
-				String Students[] = line.split(", ");
-				boolean done = false;
-				String findString = args[0].substring(1);
-				for(int idx = 0; idx<Students.length && !done; idx++) {
-					if(Students[idx].equals(findString)) {
+				String Students[] = getBufferedReader().readLine().split(", ");
+				int idx;
+				for( idx = 0; idx<Students.length; idx++) {
+					if(Students[idx].trim().equals(args[0].substring(1).trim())) {
 						System.out.println(Constant.dataFound);
-						done=true;
+						break;
 					}
 				}
-				if(!done){
-					System.out.println("The word you are searching for "+ "( " + findString + " )" + " is not found!");
+				if(idx>=Students.length){
+					System.out.println("The word you are searching for "+ "( " + args[0].substring(1).trim() + " )" + " is not found!");
 				}
 			}
 			catch (Exception e){
@@ -95,17 +81,8 @@ public class StudentList {
 		else if(args[0].contains("c")) {
 			System.out.println(Constant.loadingText);
 			try {
-				BufferedReader bufferedReader = getBufferedReader();
-				String line =  bufferedReader.readLine();
-				char StudentCharArray[] = line.toCharArray();
-				int countOfKomma=0;
-				for(char studentChar:StudentCharArray) {
-					if( studentChar ==',')
-					{
-						countOfKomma++;
-					}
-				}
-				System.out.println(countOfKomma+1 +" word(s) found ");
+				String StudentCharArray[] = getBufferedReader().readLine().split(", ");
+				System.out.println(StudentCharArray.length +" word(s) found ");
 			}
 			catch (Exception e){
 
@@ -120,7 +97,6 @@ public class StudentList {
 		printWriter.flush();
 		printWriter.close();
 	}
-
 	private static BufferedReader getBufferedReader() throws FileNotFoundException {
 		BufferedReader bufferedReader = new BufferedReader(
 				new InputStreamReader(
