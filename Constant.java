@@ -1,4 +1,5 @@
 public abstract class Constant {
+    // All the constant are decalred here as variable
     public static String textFile = "students.txt";
     public static String validText = "Please Enter a valid Code to Execute!";
     public static  String validText2 = "Plz Enter a valid Code to Execute." +
